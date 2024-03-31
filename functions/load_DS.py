@@ -5,6 +5,7 @@
 ## fashion_mnist     Not available in Cauchy and Gumbal vgg16 models
 
 def load_ds (DS):
+    import tensorflow_datasets as tfds
     (train_ds,test_ds_train,test_ds_test,test_ds_testadv), INFO = tfds.load(name = DS,
                                 split = ['train[:90%]','test[:90%]','test[90%:99%]','test[99%:]'],
                                 as_supervised = True,

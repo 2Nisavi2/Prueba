@@ -1,6 +1,5 @@
 ##Load Libraries
 import tensorflow as tf
-import tensorflow_datasets as tfds
 import argparse
 import pathlib
 from tensorflow.keras import layers

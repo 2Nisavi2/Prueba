@@ -29,27 +29,28 @@ print('Done load')
 
 ### --LOAD ARCHITECTURE-- ###
 if KIND == 'DET':
-    from Prueba.networks import vgg as mod
+    from Prueba.networks.vgg import VGG as mod
 if KIND == 'MNF_1C':
-    from Prueba.networks import vgg_b1 as mod
+    from Prueba.networks.vgg_b1 import VGG as mod
 if KIND == 'MNF_BT':
-    from Prueba.networks import vgg_bt as mod
+    from Prueba.networks.vgg_bt import VGG as mod
 if KIND == 'REP_1C':
-    from Prueba.networks import vgg_b1_Re as mod
+    from Prueba.networks.vgg_b1_Re import VGG as mod
 if KIND == 'REP_BT':
-    from Prueba.networks import vgg_bt_Re as mod
+    from Prueba.networks.vgg_bt_Re import VGG as mod
 if KIND == 'CAU_1C':
-    from Prueba.networks import vgg_b1_MNF_CA as mod
+    from Prueba.networks.vgg_b1_MNF_CA import VGG as mod
 if KIND == 'CAU_BT':
-    from Prueba.networks import vgg_bt_MNF_CA as mod
+    from Prueba.networks.vgg_bt_MNF_CA import VGG as mod
 if KIND == 'GUM_1C':
-    from Prueba.networks import vgg_b1_MNF_GUM as mod
+    from Prueba.networks.vgg_b1_MNF_GUM import VGG as mod
 if KIND == 'GUM_BT':
-    from Prueba.networks import vgg_bt_MNF_GUM as mod
+    from Prueba.networks.vgg_bt_MNF_GUM import VGG as mod
 
 ### --LOAD WEIGHTS-- ###
 print('Loading weights')
-Model = load_weight(KIND, ARC, DATA)  
+Model = load_weight(KIND, ARC, DATA)
+print('Weights loaded')
 
 ### --COMPILE MODEL-- ###
 print('Compile model')
@@ -76,21 +77,3 @@ print('Model compiled')
 ### --TEST MODEL-- ###
 print('Testing model')
 model.evaluate(data[1])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-MOD = 'vgg16_mnist'
-Model = load_model(MOD)
-

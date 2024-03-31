@@ -12,7 +12,7 @@ import tensorflow_probability as tfp
 tfd = tfp.distributions
 import sys
 sys.path.insert(1, 'models/tf-mnf')
-from tf_mnf.layers import MNFConv2D, MNFDense
+from Prueba.tf_mnf.Gumbel import MNFConv2D, MNFDense
 import functools
 
 config = {

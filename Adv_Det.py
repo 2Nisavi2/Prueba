@@ -44,9 +44,9 @@ if KIND == 'CAU_1C':
 if KIND == 'CAU_BT':
     from Prueba.networks.vgg_bt_MNF_CA import VGG as mod
 if KIND == 'GUM_1C':
-    from Prueba.networks.vgg_b1_MNF_GUM import VGG as mod
-if KIND == 'GUM_BT':
     from Prueba.networks.vgg_bt_MNF_GUM import VGG as mod
+if KIND == 'GUM_BT':
+    from Prueba.networks.vgg_b1_MNF_GUM import VGG as mod
 
 ### --LOAD WEIGHTS-- ###
 print('Loading weights')

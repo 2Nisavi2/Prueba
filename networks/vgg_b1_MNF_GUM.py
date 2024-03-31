@@ -14,7 +14,8 @@ tfd = tfp.distributions
 import sys
 sys.path.insert(1, 'models/tf-mnf')
 import tensorflow_probability as tfp
-from Prueba.tf_mnf.Gumbel import MNFConv2D, MNFDense
+from Prueba.tf_mnf.MNF.mnf_conv import mnf_conv
+from Prueba.tf_mnf.MNF.mnf_dense import mnf_dense
 
 import functools
 ## Divergencia

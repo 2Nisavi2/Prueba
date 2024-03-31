@@ -4,7 +4,7 @@ import tensorflow as tf
 from Prueba.tf_mnf.flows import IAF, NormalizingFlow
 
 
-class MNFDense(tf.keras.layers.Layer):
+class mnf_dense(tf.keras.layers.Layer):
     """Bayesian fully-connected layer with weight posterior modeled by diagonal
     covariance Gaussian. To increase expressiveness and allow for multimodality and
     non-zero covariance between weights, the Gaussian means depend on an auxiliary

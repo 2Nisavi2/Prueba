@@ -12,7 +12,7 @@ import tensorflow_probability as tfp
 tfd = tfp.distributions
 import sys
 sys.path.insert(1, 'models/tf-mnf')
-from Prueba.tf_mnf.Gumbel import MNFConv2D, MNFDense
+from Prueba.tf_mnf.Gumbel import mnf_conv, mnf_dense
 import functools
 
 config = {
@@ -30,7 +30,7 @@ class VGG(tf.keras.Model):
         self.num_classes=num_classes
         self.conv = self._make_layers(config[vgg_name])
         self.flatten = layers.Flatten()
-        self.fc = MNFDense(num_classes, prior_choice='standard_gumbel')
+        self.fc = mnf_dense(num_classes, prior_choice='standard_gumbel')
         self.oh = tfp.layers.OneHotCategorical(num_classes)
         
     def call(self, x):

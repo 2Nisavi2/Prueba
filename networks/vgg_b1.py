@@ -14,7 +14,7 @@ tfd = tfp.distributions
 import sys
 sys.path.insert(1, 'models/tf-mnf')
 import tensorflow_probability as tfp
-from Prueba.tf_mnf.MNF import MNFConv2D, MNFDense
+from Prueba.tf_mnf.MNF import mnf_conv, mnf_dense
 
 import functools
 ## Divergencia
@@ -37,7 +37,7 @@ class VGG(tf.keras.Model):
         super(VGG, self).__init__()
         self.conv = self._make_layers(config[vgg_name])
         self.flatten = layers.Flatten()
-        self.fc = MNFDense(num_classes)
+        self.fc = mnf_dense(num_classes)
         self.oh = tfp.layers.OneHotCategorical(num_classes)
         
     def call(self, x):
@@ -53,7 +53,7 @@ class VGG(tf.keras.Model):
             if l == 'M':
                 layer += [layers.MaxPool2D(pool_size=2, strides=2)]
             else:
-                layer += [MNFConv2D(l, 3), 
+                layer += [mnf_conv(l, 3), 
                           layers.BatchNormalization(),
                           layers.ReLU()]
         layer += [layers.AveragePooling2D(pool_size=1, strides=1)]

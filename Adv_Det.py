@@ -23,33 +23,6 @@ from Prueba.functions.load_DS import load_ds
 from Prueba.functions.load_weight import load_weight
 
 ### --LOAD DATASET-- ###
-## Load the dataset to use in the neural network models. Posible datasets:
-# 'mnist'             Available in all the models
-# 'fashion_mnist'     Not available in Cauchy and Gumbal vgg16 models
-
-## For the categories select a number between 0 and 9. Follow the dataset, the numbers rep´resent a especific category:
-## MNIST Categories:
-# 0   Class 0
-# 1   Class 1
-# 2   Class 2
-# 3   Class 3
-# 4   Class 4
-# 5   Class 5
-# 6   Class 6
-# 7   Class 7
-# 8   Class 8
-# 9   Class 9
-## FASHION-MNIST Categories:
-# 0   Class T-shirt/top
-# 1   Class Trouser
-# 2   Class Pullover
-# 3   Class Dress
-# 4   Class Coat
-# 5   Class Sandal
-# 6   Class Shirt
-# 7   Class Sneaker
-# 8   Class Bag
-# 9   Class Ankle boot
 print('Loading dataset')
 data = load_ds(DATA, VICTIM_CLASS)
 print('Done load')

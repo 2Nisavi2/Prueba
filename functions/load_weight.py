@@ -25,7 +25,7 @@
 # 'vgg16bt_GUM'             Full Gumbel MNF Bayesian vgg16 model in mnist dataset
 # 'vgg16b1_GUM'             Full Cumbel MNF Bayesian vgg16 model in mnist dataset
 
-def load_model (KIND, ARC, DATA):
+def load_weight (KIND, ARC, DATA):
 
     if KIND == 'DET':
         if ARC == 'vgg16':

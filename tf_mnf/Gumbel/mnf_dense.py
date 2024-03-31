@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from tf_mnf.flows import IAF, NormalizingFlow
+from Prueba.tf_mnf.flows import IAF, NormalizingFlow
 
 
 class mnf_dense(tf.keras.layers.Layer):

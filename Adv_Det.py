@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 ### --PARAMETERS-- ###
 ARC ='vgg16'
 KIND = 'DET'
+BLOCK = 'SEQ'
 DATA = 'mnist'
 VICTIM_CLASS = 5
 ADV_CLASS = 8

@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from Prueba.tf_mnf.flows import IAF, NormalizingFlow
+from tf_mnf.flows import IAF, NormalizingFlow
 
 
 class mnf_dense(tf.keras.layers.Layer):
@@ -110,7 +110,7 @@ class mnf_dense(tf.keras.layers.Layer):
         if self.prior_choice=='standard_normal':
             kl_div_w = 0.5 * tf.reduce_sum(
             tf.math.log(iUp)
-            - 2 * self.log_std_W
+            - tf.math.log(Vtilde)*2
             + (Vtilde + tf.square(Mtilde)) / iUp
             - 1
             )
@@ -136,7 +136,7 @@ class mnf_dense(tf.keras.layers.Layer):
             t3 = tf.exp(-mean_scale_ratio + 0.5 * var_scale_sqr_ratio + loc_scale_ratio)
             kl_div_w = tf.reduce_sum(-t1 + t2 + t3 - (0.5 * (1 + tf.math.log(2 * np.pi))))
         elif self.prior_choice == 'standard_cauchy':
-            kl_div_w = tf.reduce_sum(tf.math.log(np.pi / 2) + .5 * tf.math.log(iUp) - 2 * self.log_std_W + ((Vtilde + tf.square(Mtilde)) / (2 * iUp)))
+            kl_div_w = tf.reduce_sum(tf.math.log(np.pi / 2) + .5 * tf.math.log(iUp) - tf.math.log(Vtilde) + ((Vtilde + tf.square(Mtilde)) / (2 * iUp)))
 
 
         kl_div_b = 0.5 * tf.reduce_sum(

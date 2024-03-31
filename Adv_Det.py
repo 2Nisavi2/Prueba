@@ -2,6 +2,7 @@
 import argparse
 import pathlib
 from tensorflow.keras import layers
+import tensorflow as tf
 import sys
 import numpy as np
 from sklearn.decomposition import IncrementalPCA
@@ -9,6 +10,13 @@ from scipy.stats import wasserstein_distance,energy_distance
 from sklearn.decomposition import PCA
 import os
 import matplotlib.pyplot as plt
+
+### --PARAMETERS-- ###
+ARC ='vgg16'
+KIND = 'DET'
+DATA = 'mnist'
+VICTIM_CLASS = 5
+ADV_CLASS = 8
 
 ### --Load Functions-- ##
 from Prueba.functions.load_DS import load_ds
@@ -42,33 +50,51 @@ from Prueba.functions.load_model import load_model
 # 7   Class Sneaker
 # 8   Class Bag
 # 9   Class Ankle boot
-data = load_ds('mnist',5)
+print('Loading dataset')
+data = load_ds(DATA, VICTIM_CLASS)
+print('Done load')
 
-## This code allow the load of the model follow the kind of neural network. This is the list of possible models to load:
-# 'vgg16_mnist'             Deterministic vgg16 model in mnist dataset
-# 'vgg19_mnist'             Deterministic vgg19 model in mnist dataset
-# 'vgg16bt_mnist'           Full MNF Bayesian vgg16 model in mnist dataset
-# 'vgg19bt_mnist'           Full MNF Bayesian vgg19 model in mnist dataset
-# 'vgg16b1_mnist'           Last layer MNF Bayesian vgg16 model in mnist dataset
-# 'vgg19b1_mnist'           Last layer MNF Bayesian vgg19 model in mnist dataset
-# 'vgg16bt_Re_mnist'        Full Reparameterization Trick Bayesian vgg16 model in mnist dataset
-# 'vgg19bt_Re_mnist'        Full Reparameterization Trick Bayesian vgg19 model in mnist dataset
-# 'vgg16b1_Re_mnist'        Last layer Reparameterization Trick Bayesian vgg16 model in mnist dataset
-# 'vgg19b1_Re_mnist'        Last layer Reparameterization Trick Bayesian vgg19 model in mnist dataset
-# 'vgg16_fashion'           Deterministic vgg16 model in fashion_mnist dataset
-# 'vgg19_fashion'           Deterministic vgg19 model in fashion_mnist dataset
-# 'vgg16bt_fashion'         Full MNF Bayesian vgg16 model in fashion_mnist dataset
-# 'vgg19bt_fashion'         Full MNF Bayesian vgg19 model in fashion_mnist dataset
-# 'vgg16b1_fashion'         Last layer MNF Bayesian vgg16 model in fashion_mnist dataset
-# 'vgg19b1_fashion'         Last layer MNF Bayesian vgg19 model in fashion_mnist dataset
-# 'vgg16bt_Re_fashion'      Full Reparameterization Trick Bayesian vgg16 model in fashion_mnist dataset
-# 'vgg19bt_Re_fashion'      Full Reparameterization Trick Bayesian vgg19 model in fashion_mnist dataset
-# 'vgg16b1_Re_fashion'      Last layer Reparameterization Trick Bayesian vgg16 model in fashion_mnist dataset
-# 'vgg19b1_Re_fashion'      Last layer Reparameterization Trick Bayesian vgg19 model in fashion_mnist dataset
-# 'vgg16bt_CA'              Full Cauchy MNF Bayesian vgg16 model in mnist dataset
-# 'vgg16b1_CA'              Full Cauchy MNF Bayesian vgg16 model in mnist dataset
-# 'vgg16bt_GUM'             Full Gumbel MNF Bayesian vgg16 model in mnist dataset
-# 'vgg16b1_GUM'             Full Cumbel MNF Bayesian vgg16 model in mnist dataset
-Model = load_model('vgg16_mnist')
+## --LOAD MODELS-- ##
+print('Loading model')
+Model = load_model(KIND, ARC, DATA)    
+model = mod(Model[0], Model[1])
+model.build(Model[2])
+model.load_weights(Model[3])
 
-model.evaluate(data[1][0])
+## Loss Function
+if KIND =='DET':
+    loss = tf.keras.losses.CategoricalCrossentropy()
+else:
+    def nll(y_true, y_pred):
+        cross_entropy=-y_pred.log_prob(y_true)
+        nll = tf.reduce_mean(cross_entropy)+model.kl_div() / data[0]
+        return nll
+    loss = nll
+
+model.compile(optimizer="adam",
+        loss=loss,
+        metrics=["accuracy"])
+
+print('Model load')
+
+### --TEST MODEL-- ###
+print('Testing model')
+model.evaluate(data[1])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MOD = 'vgg16_mnist'
+Model = load_model(MOD)
+

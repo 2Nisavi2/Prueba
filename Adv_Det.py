@@ -20,7 +20,7 @@ ADV_CLASS = 8
 
 ### --Load Functions-- ##
 from Prueba.functions.load_DS import load_ds
-from Prueba.functions.load_model import load_model
+from Prueba.functions.load_weight import load_weight
 
 ### --LOAD DATASET-- ###
 ## Load the dataset to use in the neural network models. Posible datasets:
@@ -54,9 +54,32 @@ print('Loading dataset')
 data = load_ds(DATA, VICTIM_CLASS)
 print('Done load')
 
-## --LOAD MODELS-- ##
-print('Loading model')
-Model = load_model(KIND, ARC, DATA)    
+### --LOAD ARCHITECTURE-- ###
+if KIND == 'DET':
+    from Prueba.networks import vgg as mod
+if KIND == 'MNF_1C':
+    from Prueba.networks import vgg_b1 as mod
+if KIND == 'MNF_BT':
+    from Prueba.networks import vgg_bt as mod
+if KIND == 'REP_1C':
+    from Prueba.networks import vgg_b1_Re as mod
+if KIND == 'REP_BT':
+    from Prueba.networks import vgg_bt_Re as mod
+if KIND == 'CAU_1C':
+    from Prueba.networks import vgg_b1_MNF_CA as mod
+if KIND == 'CAU_BT':
+    from Prueba.networks import vgg_bt_MNF_CA as mod
+if KIND == 'GUM_1C':
+    from Prueba.networks import vgg_b1_MNF_GUM as mod
+if KIND == 'GUM_BT':
+    from Prueba.networks import vgg_bt_MNF_GUM as mod
+
+### --LOAD WEIGHTS-- ###
+print('Loading weights')
+Model = load_weight(KIND, ARC, DATA)  
+
+### --COMPILE MODEL-- ###
+print('Compile model')
 model = mod(Model[0], Model[1])
 model.build(Model[2])
 model.load_weights(Model[3])
@@ -75,7 +98,7 @@ model.compile(optimizer="adam",
         loss=loss,
         metrics=["accuracy"])
 
-print('Model load')
+print('Model compiled')
 
 ### --TEST MODEL-- ###
 print('Testing model')

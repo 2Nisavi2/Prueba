@@ -28,7 +28,6 @@
 def load_model (KIND, ARC, DATA):
 
     if KIND == 'DET':
-        from Prueba.networks import vgg as mod
         if ARC == 'vgg16':
             if DATA == 'mnist':
                 BUILD_CAT = 'vgg16'
@@ -44,7 +43,6 @@ def load_model (KIND, ARC, DATA):
                 BUILD_CAT = 'vgg19'
                 WEIGHT = 'Prueba/weights/vgg19/fashion_mnist/checkpoint'
     if KIND == 'MNF_1C':
-        from Prueba.networks import vgg_b1 as mod
         if ARC == 'vgg16':
             if DATA == 'mnist':
                 BUILD_CAT = 'vgg16'
@@ -60,7 +58,6 @@ def load_model (KIND, ARC, DATA):
                 BUILD_CAT = 'vgg19'
                 WEIGHT = 'Prueba/weights/vgg19b1/fashion_mnist/checkpoint'
     if KIND == 'MNF_BT':
-        from Prueba.networks import vgg_bt as mod
         if ARC == 'vgg16':
             if DATA == 'mnist':
                 BUILD_CAT = 'vgg16'
@@ -76,7 +73,6 @@ def load_model (KIND, ARC, DATA):
                 BUILD_CAT = 'vgg19'
                 WEIGHT = 'Prueba/weights/vgg19bt/fashion_mnist/checkpoint'
     if KIND == 'REP_1C':
-        from Prueba.networks import vgg_b1_Re as mod
         if ARC == 'vgg16':
             if DATA == 'mnist':
                 BUILD_CAT = 'vgg16'
@@ -92,7 +88,6 @@ def load_model (KIND, ARC, DATA):
                 BUILD_CAT = 'vgg19'
                 WEIGHT = 'Prueba/weights/vgg19b1Re/fashion_mnist/checkpoint'
     if KIND == 'REP_BT':
-        from Prueba.networks import vgg_bt_Re as mod
         if ARC == 'vgg16':
             if DATA == 'mnist':
                 BUILD_CAT = 'vgg16'
@@ -108,22 +103,18 @@ def load_model (KIND, ARC, DATA):
                 BUILD_CAT = 'vgg19'
                 WEIGHT = 'Prueba/weights/vgg19btRe/fashion_mnist/checkpoint'
     if KIND == 'CAU_1C':
-        from Prueba.networks import vgg_b1_MNF_CA as mod
         if ARC == 'vgg16':
             BUILD_CAT = 'vgg16'
             WEIGHT = 'Prueba/weights/vgg16MNFLUb1_CA/mnist/checkpoint'
     if KIND == 'CAU_BT':
-        from Prueba.networks import vgg_bt_MNF_CA as mod
         if ARC == 'vgg16':
             BUILD_CAT = 'vgg16'
             WEIGHT = 'Prueba/weights/vgg16MNFLUbt_CA/mnist/checkpoint'
     if KIND == 'GUM_1C':
-        from Prueba.networks import vgg_b1_MNF_GUM as mod
         if ARC == 'vgg16':
             BUILD_CAT = 'vgg16'
             WEIGHT = 'Prueba/weights/vgg16MNFLUb1_GUM/mnist/checkpoint'
     if KIND == 'GUM_BT':
-        from Prueba.networks import vgg_bt_MNF_GUM as mod
         if ARC == 'vgg16':
             BUILD_CAT = 'vgg16'
             WEIGHT = 'Prueba/weights/vgg16MNFLUbt_GUM/mnist/checkpoint'

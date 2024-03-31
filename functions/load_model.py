@@ -39,6 +39,4 @@ def load_model (mod):
         model.compile(optimizer="adam",
                 loss=nll,
                 metrics=["accuracy"])
-        model.evaluate(data[1][0])
-    return(model)
         

@@ -70,3 +70,5 @@ data = load_ds('mnist',5)
 # 'vgg16bt_GUM'             Full Gumbel MNF Bayesian vgg16 model in mnist dataset
 # 'vgg16b1_GUM'             Full Cumbel MNF Bayesian vgg16 model in mnist dataset
 Model = load_model('vgg16_mnist')
+
+model.evaluate(data[1][0])

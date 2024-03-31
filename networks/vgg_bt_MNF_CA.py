@@ -12,8 +12,8 @@ import tensorflow_probability as tfp
 tfd = tfp.distributions
 import sys
 sys.path.insert(1, 'models/tf-mnf')
-from Prueba.tf_mnf.MNF.mnf_conv import mnf_conv
-from Prueba.tf_mnf.MNF.mnf_dense import mnf_dense
+from Prueba.tf_mnf.Cauchy.mnf_conv import mnf_conv
+from Prueba.tf_mnf.Cauchy.mnf_dense import mnf_dense
 import functools
 
 config = {

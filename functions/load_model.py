@@ -26,8 +26,8 @@
 # 'vgg16bt_GUM'             Full Gumbel MNF Bayesian vgg16 model in mnist dataset
 # 'vgg16b1_GUM'             Full Cumbel MNF Bayesian vgg16 model in mnist dataset
 
-def load_model (model):
-    if model == 'vgg16_mist':
+def load_model (mod):
+    if mod == 'vgg16_mist':
         from Prueba.networks import VGG
         model = VGG('vgg16', 10)
         model.build((None,32,32,1))

@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from tf_mnf.flows import IAF, NormalizingFlow
+from Prueba.tf_mnf.flows import IAF, NormalizingFlow
 
 
 class MNFConv2D(tf.keras.layers.Layer):
@@ -30,6 +30,7 @@ class MNFConv2D(tf.keras.layers.Layer):
         flow_h_sizes=(50,),
         max_std=1,
         std_init=1,
+        prior_choice='standard_normal',
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -46,6 +47,7 @@ class MNFConv2D(tf.keras.layers.Layer):
         self.n_flows_q = n_flows_q
         self.n_flows_r = n_flows_r
         self.use_z = use_z
+        self.prior_choice=prior_choice
 
     def build(self, input_shape):
         stack_size = input_shape[-1]  # = 1 for black & white images like MNIST
@@ -120,12 +122,38 @@ class MNFConv2D(tf.keras.layers.Layer):
         # Stacking yields same result as outer product with ones. See eqs. 11, 12.
         iUp = tf.stack([tf.exp(self.prior_var_r_p)] * self.n_filters, axis=1)
 
-        kl_div_w = 0.5 * tf.reduce_sum(
+        if self.prior_choice=='standard_normal':
+            kl_div_w = 0.5 * tf.reduce_sum(
             tf.math.log(iUp)
             - tf.math.log(std_w)
             + (Vtilde + tf.square(Mtilde)) / iUp
             - 1
-        )
+            )
+        elif self.prior_choice=='log_uniform':
+
+            Mtilde_pos = tf.math.sqrt(tf.multiply(Mtilde, Mtilde))
+            alpha_i = tf.math.divide(Vtilde, Mtilde_pos)
+            c_1 = 1.161415124
+            c_2 = -1.50204118
+            c_3 = 0.58629921
+            constant = -0.24570927
+            alpha_i2 = tf.multiply(alpha_i, alpha_i)
+            alpha_i3 = tf.multiply(alpha_i2, alpha_i)
+
+            kl_div_w = tf.reduce_sum(constant + 0.5 * tf.math.log(alpha_i) + c_1 * alpha_i + c_2 * alpha_i2 + c_3 * alpha_i3)
+
+        elif self.prior_choice == 'standard_gumbel':
+            mean_scale_ratio = Mtilde
+            var_scale_sqr_ratio = Vtilde
+            loc_scale_ratio = 0
+            t1 = tf.math.log(var_scale_sqr_ratio) * 0.5
+            t2 = mean_scale_ratio - loc_scale_ratio
+            t3 = tf.exp(-mean_scale_ratio + 0.5 * var_scale_sqr_ratio + loc_scale_ratio)
+            kl_div_w = tf.reduce_sum(-t1 + t2 + t3 - (0.5 * (1 + tf.math.log(2 * np.pi))))
+        elif self.prior_choice == 'standard_cauchy':
+            kl_div_w = tf.reduce_sum(tf.math.log(np.pi / 2) + .5 * tf.math.log(iUp) - tf.math.log(Vtilde) + ((Vtilde + tf.square(Mtilde)) / (2 * iUp)))
+
+
         kl_div_b = 0.5 * tf.reduce_sum(
             self.prior_var_r_p_bias
             - self.log_var_b

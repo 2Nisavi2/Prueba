@@ -80,5 +80,5 @@ print('Testing model')
 model.evaluate(data[1])
 
 ### --GENERATE ADVERSARIAL IMAGES AND SAVE ADVERSARIAL VALUES-- ###
-from Prueba.functions.predict_values import adv_att_gen
+from Prueba.functions import adv_att_gen
 adv_att_gen (model, data[3], ADV_CLASS, VICTIM_CLASS, DATA, ATTACK, EPX, KIND, BLOCK)

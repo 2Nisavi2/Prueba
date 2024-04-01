@@ -1,4 +1,6 @@
 ### --PGD ATTACK-- ###
+import tensorflow as tf
+
 def pgd_attack(model, image, target_label, epsilon=0.15, num_steps=100, step_size=0.01):
     original_image = tf.identity(image)
 

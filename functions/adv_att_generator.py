@@ -1,11 +1,10 @@
 ### --ADVERSARIAL ATTACK GENERATOR-- ###
+import numpy as np
+import tensorflow as tf
+import matplotlib.pyplot as plt
+from Prueba.functions.get_layer_dict import get_layer_dictionary as gld
 
 def adv_att_gen (model, ADV_DATA, ADV_CLASS, VICTIM_CLASS, DATA, ATTACK, EPX, KIND, BLOCK):
-    
-    import numpy as np
-    import tensorflow as tf
-    import matplotlib.pyplot as plt
-    from Prueba.functions.get_layer_dict import get_layer_dictionary as gld
     if ATTACK == 'PGD':
         from Prueba.functions.load_attack import pgd_attack as att
     if ATTACK == 'CW':

@@ -4,12 +4,10 @@ import pathlib
 from tensorflow.keras import layers
 import tensorflow as tf
 import sys
-import numpy as np
 from sklearn.decomposition import IncrementalPCA
 from scipy.stats import wasserstein_distance,energy_distance
 from sklearn.decomposition import PCA
 import os
-import matplotlib.pyplot as plt
 
 ### --PARAMETERS-- ###
 ARC ='vgg16'
@@ -18,8 +16,10 @@ BLOCK = 'SEQ'
 DATA = 'mnist'
 VICTIM_CLASS = 5
 ADV_CLASS = 8
+ATTACK = 'PGD'
+EPX = 0.05
 
-### --Load Functions-- ##
+### --LOAD FUNCTIONS-- ##
 from Prueba.functions.load_DS import load_ds
 from Prueba.functions.load_weight import load_weight
 
@@ -44,9 +44,9 @@ if KIND == 'CAU_1C':
 if KIND == 'CAU_BT':
     from Prueba.networks.vgg_bt_MNF_CA import VGG as mod
 if KIND == 'GUM_1C':
-    from Prueba.networks.vgg_bt_MNF_GUM import VGG as mod
-if KIND == 'GUM_BT':
     from Prueba.networks.vgg_b1_MNF_GUM import VGG as mod
+if KIND == 'GUM_BT':
+    from Prueba.networks.vgg_bt_MNF_GUM import VGG as mod
 
 ### --LOAD WEIGHTS-- ###
 print('Loading weights')
@@ -78,3 +78,7 @@ print('Model compiled')
 ### --TEST MODEL-- ###
 print('Testing model')
 model.evaluate(data[1])
+
+### --GENERATE ADVERSARIAL IMAGES AND SAVE ADVERSARIAL VALUES-- ###
+from Prueba.functions.predict_values import adv_att_gen
+adv_att_gen (model, data[3], ADV_CLASS, VICTIM_CLASS, DATA, ATTACK, EPX, KIND, BLOCK)

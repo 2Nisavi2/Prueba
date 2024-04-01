@@ -146,6 +146,8 @@ def adv_att_gen (model, ADV_DATA, ADV_CLASS, VICTIM_CLASS, DATA, ATTACK, EPX, KI
         if BLOCK == 'DEN':
             CAP = 'mnf_dense'
 
+    dict_model = gld(model, input_shape=(32,32,1))
+
     for dsadv_testx,dsadv_testy in ADV_DATA.take(1):
         dsadv_testx1=dsadv_testx[Vic_loc]
         print('Natural Image')
@@ -154,8 +156,6 @@ def adv_att_gen (model, ADV_DATA, ADV_CLASS, VICTIM_CLASS, DATA, ATTACK, EPX, KI
         img_adv=att(dict_model[CAP], dsadv_testx1, target_label, epsilon=EPX, num_steps=200, step_size=0.01)
         print('Adversarial Image')
         plt.imshow(img_adv)
-
-    dict_model = gld(model, input_shape=(32,32,1))
 
     print('Predict Adv images')
     valueb_list_testadv=[]
